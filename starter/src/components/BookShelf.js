@@ -55,7 +55,7 @@ const BookShelf = ({ bookData, updateShelf }) => {
         );
       })}
       <div className="open-search">
-        {<Link to="/add-book" />}
+        {<Link to="/search" />}
       </div>
     </div>
   );

@@ -52,10 +52,11 @@ function App() {
           }
         />
         <Route
-          path="/add-book"
+          path="/search"
           element={
             <SearchBook
-              updateShelf={(book, ShelfName) => {
+              currentBooks={booksData}
+              notifyUpdate={(book, ShelfName) => {
                 onUpdateShelf(book, ShelfName);
               }}
             />

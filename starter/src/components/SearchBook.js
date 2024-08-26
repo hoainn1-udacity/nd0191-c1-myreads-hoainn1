@@ -6,8 +6,8 @@ import BookList from "./BookDisplay/BookList";
 import * as BookAPIS from "../apis/BooksAPI";
 import "../css/App.css";
 
-const SearchBook = ({ updateShelf }) => {
-  const max = useRef(50);
+const SearchBook = ({ notifyUpdate, currentBooks }) => {
+  const max = useRef(20);
   const [searchString, setSearchString] = useState("");
   const [searchData, setSearchData] = useState([]);
 
@@ -50,9 +50,30 @@ const SearchBook = ({ updateShelf }) => {
    * @param {string} shelfName
    */
   const onBookUpdate = (book, shelfName) => {
-    if (updateShelf) {
-      updateShelf(book, shelfName);
+    if (notifyUpdate) {
+      notifyUpdate(book, shelfName);
     }
+  };
+
+  /**
+   * @description map and update correct search data
+   * @param {array} searchData
+   */
+  const updateSearchStatus = (searchData) => {
+    if (!searchData) {
+      return [];
+    }
+    const updatedSearchData = searchData.map((result) => {
+      const currentBookOnShelf = currentBooks?.filter(
+        (book) => result?.id === book?.id
+      );
+
+      if (currentBookOnShelf.length !== 0) {
+        result.shelf = currentBookOnShelf[0].shelf;
+      }
+      return result;
+    });
+    return updatedSearchData;
   };
 
   return (
@@ -73,7 +94,7 @@ const SearchBook = ({ updateShelf }) => {
       <div className="search-books-results">
         {searchData && (
           <BookList
-            books={searchData}
+            books={updateSearchStatus(searchData)}
             bookUpdate={(book, shelfName) => onBookUpdate(book, shelfName)}
           />
         )}
@@ -83,7 +104,8 @@ const SearchBook = ({ updateShelf }) => {
 };
 
 SearchBook.propTypes = {
-  updateShelf: PropTypes.func.isRequired,
+  notifyUpdate: PropTypes.func.isRequired,
+  currentBooks: PropTypes.array.isRequired,
 };
 
 export default SearchBook;

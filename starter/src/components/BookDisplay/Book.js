@@ -43,7 +43,7 @@ const Book = ({ book, shelfChange }) => {
             defaultValue={book?.shelf ? book.shelf.toString() : "none"}
           >
             <option value="none" disabled>
-              Add to...
+              None
             </option>
             <option value="currentlyReading">Currently Reading</option>
             <option value="wantToRead">Want to Read</option>
