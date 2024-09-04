@@ -38,19 +38,17 @@ const Book = ({ book, shelfChange }) => {
           }}
         />
         <div className="book-shelf-changer">
-          {/* Here should handle selected value when search result are set */}
-          {/*  and when i'm checked all book not in main page is selected with */}
-          {/*  "none" option */}
           <select
             onChange={(e) => handleChangeShelf(e)}
-            defaultValue={book?.shelf ? book.shelf.toString() : "none"}
+            value={book?.shelf ? book.shelf.toString() : "none"}
           >
-            <option value="none" disabled>
-              None
+            <option value="addTo" disabled>
+              Add to...
             </option>
             <option value="currentlyReading">Currently Reading</option>
             <option value="wantToRead">Want to Read</option>
             <option value="read">Read</option>
+            <option value="none">None</option>
           </select>
         </div>
       </div>
